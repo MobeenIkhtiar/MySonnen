@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "AddInstaller";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEAD-->
+        <div class="page-head">
+            <!-- BEGIN PAGE TITLE -->
+            <div class="page-title">
+                <h1>
+                    Dashboard
+                    <small>statistics, charts and reports</small>
+                </h1>
+            </div>
+            <!-- END PAGE TITLE -->
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE BREADCRUMB -->
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <a href="@Url.Action("Index","Admin")">Home</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span class="active">Dashboard</span>
+            </li>
+        </ul>
+        <!-- END PAGE BREADCRUMB -->
+        <!-- BEGIN PAGE BASE CONTENT -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN SAMPLE FORM PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-green-haze">
+                            <i class="icon-user font-green-haze"></i>
+                            <span class="caption-subject bold uppercase"> Add New User</span>
+                        </div>
+                        <div class="actions">
+
+                            <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title=""> </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                        <form role="form" class="form-horizontal" action="@Url.Action("PostAddInstaller","Admin")" method="post">
+                            <div class="form-body">
+                                <div class="form-group form-md-line-input has-success">
+                                    <label class="col-md-2 control-label" for="form_control_1">Installer Name</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="Name" placeholder="Enter installer name" required>
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input has-success">
+                                    <label class="col-md-2 control-label" for="form_control_1">Partner Name</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" name="PartnerName" placeholder="Enter partner name" required>
+                                        <div class="form-control-focus"> </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input has-success">
+                                    <label class="col-md-2 control-label" for="form_control_1">Level</label>
+                                    <div class="col-md-10">
+                                        <select class="form-control" name="Level">
+                                            <option disabled selected value="">Select level</option>
+                                            <option value="Bronze-Platinum">Bronze-Platinum</option>
+                                            <option value="Bronze-Diamond">Bronze-Diamond</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group form-md-line-input has-success">
+                                    <label class="col-md-2 control-label" for="form_control_1">Free Warranty</label>
+                                    <div class="col-md-10">
+                                        <input type="radio" name="FreeWarranty" value="1" checked> Yes
+                                        <input type="radio" name="FreeWarranty" value="0"> No
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn blue">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

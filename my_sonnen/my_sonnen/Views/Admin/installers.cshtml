@@ -1,0 +1,157 @@
+﻿@model List<my_sonnen.Models.Installer>
+@{
+    ViewBag.Title = "installers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEAD-->
+        <div class="page-head">
+            <!-- BEGIN PAGE TITLE -->
+            <div class="page-title">
+                <h1>
+                    Dashboard
+                </h1>
+            </div>
+            <!-- END PAGE TITLE -->
+        </div>
+        <!-- END PAGE HEAD-->
+        <!-- BEGIN PAGE BREADCRUMB -->
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <a href="@Url.Action("Index","Admin")">Home</a>
+                <i class="fa fa-circle"></i>
+            </li>
+            <li>
+                <span class="active">Registered Users</span>
+            </li>
+        </ul>
+        <!-- END PAGE BREADCRUMB -->
+        <!-- BEGIN PAGE BASE CONTENT -->
+        <div class="row">
+            <div class="col-md-12">
+                @if (ViewBag.Message != null)
+                {
+                    <label class=" alert alert-success" for="form_control_1">@ViewBag.Message</label>
+
+                }
+                @if (ViewBag.Error != null)
+                {
+                    <label class=" alert alert-danger" for="form_control_1">@ViewBag.Error</label>
+
+                }
+
+                <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption font-dark">
+                            <i class=" font-dark"></i>
+                            <span class="caption-subject bold uppercase">Recent Records</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <table class="table table-striped table-bordered table-hover" id="sample_1">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Partner Name</th>
+                                    <th>Level</th>
+                                    <th>Free Warranty</th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.PartnerName</td>
+                                        <td>@item.Level</td>
+                                        <td>@item.FreeWarranty</td>
+                                        <td>
+                                            @*<a href="#" data-toggle="modal" data-target="#myModal" onclick="editUser('@item.Id','@item.FirstName','@item.LastName','@item.Email','@item.NickName','@item.Password','@item.Address','@item.Country','@item.IsAdmin','@item.IsApproved')" class="btn btn-info">Update</a>*@
+                                            <a href="@Url.Action("DeleteUser","Admin",new { Id=item.Id,approved=1})" class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
+            </div>
+        </div>
+        <!-- END PAGE BASE CONTENT -->
+    </div>
+    <!-- END CONTENT BODY -->
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="@Url.Action("EditUser","Admin")" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Update User</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">First Name:</label>
+                        <input type="text" name="FirstName" class="form-control" id="first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Last Name:</label>
+                        <input type="text" name="LastName" class="form-control" id="last-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Nick Name:</label>
+                        <input type="text" name="NickName" class="form-control" id="nick-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Email:</label>
+                        <input type="email" name="Email" class="form-control" id="user-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Address:</label>
+                        <input type="text" name="Address" class="form-control" id="user-address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Country:</label>
+                        <input type="text" name="Country" class="form-control" id="user-country" required>
+                    </div>
+                    <input type="hidden" name="IsAdmin" class="form-control" id="user-admin">
+                    <input type="hidden" name="IsApproved" class="form-control" id="user-approve">
+                    <input type="hidden" name="Id" class="form-control" id="user-id">
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Password:</label>
+                        <input type="password" name="Password" class="form-control" id="user-password" required>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Upadte</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.dt-buttons').hide();
+    })
+    function editUser(Id, fname, lname, email, nick, password, address, country, admin, approve) {
+        $('#first-name').val(fname);
+        $('#last-name').val(lname);
+        $('#nick-name').val(nick);
+        $('#user-email').val(email);
+        $('#user-password').val(password);
+        $('#user-address').val(address);
+        $('#user-country').val(country);
+        $('#user-admin').val(admin);
+        $('#user-approve').val(approve);
+        $('#user-id').val(Id);
+    }
+</script>
+

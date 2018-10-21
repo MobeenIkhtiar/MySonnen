@@ -1,0 +1,312 @@
+﻿
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+    <!-- styles -->
+    <title>Submit form</title>
+    <style>
+        body {
+            background: url('../../Content/images/bg.jpg') no-repeat;
+        }
+
+        .card {
+            background-color: rgba(255,255,255,0.3) !important;
+        }
+
+        .btn {
+            border-radius: 0px;
+        }
+
+        input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="offset-md-1 col-md-10">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <form id="form">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="firstname">First Name</label>
+                                <input type="text" class="form-control" id="firstname" name="FirstName" placeholder="First Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastname">Last Name</label>
+                                <input type="text" class="form-control" id="lastname" name="LastName" placeholder="Last Name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="address1">Address 1</label>
+                                <input type="text" class="form-control" id="address1" name="Address1" placeholder="Address 1" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="address2">Address 2</label>
+                                <input type="text" class="form-control" id="address2" name="Address2" placeholder="Address 2">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" name="City" placeholder="City" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="state">State/Province</label>
+                                <input type="text" class="form-control" id="state" name="State" placeholder="Province" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="zipcode">Zip Code</label>
+                                <input type="text" class="form-control" id="zipcode" name="ZipCode" placeholder="Zip code" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" id="email" name="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone">Phone</label>
+                                <input type="tel" class="form-control" id="phone" name="Phone" aria-describedby="emailHelp" placeholder="Enter contact number">
+                            </div>
+                            <div class="col-md-6">
+                                <label id="validationTooltipUsername10">Serial Number of Sonnen System</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="validationTooltipUsername10" name="SerialNumber" placeholder="Serial number" aria-describedby="validationTooltipUsernamePrepend" required>
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="validationTooltipUsernamePrepend"><a href="#" onclick="ShowInfo()">Help!</a></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="product">Product Installed in your home</label>
+                                <select class="form-control" id="product" name="ProductInstalled" onchange="Evaluation()">
+                                    <option disabled selected value="">Select option</option>
+                                    <option value="sonnen eco">sonnen eco (white cabinet)</option>
+                                    <option value="sonnen ecoLinx">sonnen ecoLinx (black cabinet)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="capacity">Capacity/Size of the system</label>
+                                <div class="input-group">
+                                    <select class="form-control" name="Capacity" id="capacity">
+                                        <option disabled selected value="">Select option</option>
+                                        @for (int i = 4; i < 20; i++)
+                                        {
+                                            if (i % 2 == 0)
+                                            {
+                                                <option value="@i">@i  kWh</option>
+                                            }
+                                        }
+
+                                    </select>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="validationTooltipUsernamePrepend"><a href="#" onclick="ShowInfo()">Help!</a></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="companyname">Company that Installed in your home</label>
+                                <select class="form-control" id="companyname" name="IstallerId" onchange="Loadlevel()">
+                                    <option disabled selected value="" onchange="">Select option</option>
+                                    @foreach (var item in ViewBag.Installer)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                                <p class="form-text text-muted"><strong class="text-primary">Note:</strong> If you do not see your Installer in this list, please email your name,your phone number,the name of the company that installed your system, and unit serial number(s) to   xyz@sonnen-batterie.com.</p>
+
+                            </div>
+                            <div class="col-md-12">
+                                <input type="hidden" id="level" />
+                                <input type="hidden" id="warranty" />
+
+                            </div>
+                            <div class="col-md-6">
+                                <label for="date">Date of the installation date</label>
+                                <input type="date" name="InstallDate" class="form-control" id="date" required onchange="Evaluation()" />
+                                <small class="form-text text-danger" id="dateError"></small>
+                            </div>
+
+                            <div class="col-md-12">
+                                <br />
+                                <p id="ExtensionShow"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <p id="priceShow"></p>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="text-primary">To purchase this extended warranty, please click Nextbelow.  Once payment is received, your sonnen system will be covered under warranty until dateor until x amount of cycles are reached. Please see www.sonnen-batterie.com/warrantyfor warranty details, limitations, and inclusions.</p>
+                            </div>
+                            <div class="col-md-12">
+                                <label><input type="checkbox" name="name" onchange="Check()" id="check1" /> By submitting this form, I agree and understand that I may be contacted by sonnen regardingimportant updates and informationabout my specific system.</label>
+                                <small id="checkError1" class="form-text text-danger"></small>
+                            </div>
+                            <div class="col-md-12">
+                                <label><input type="checkbox" name="name" onchange="Check1()" id="check2" /> Please clickhere if you would like to receive product updates, promotions, andotherinformation about sonnenvia email.</label>
+                                <small id="checkError2" class="form-text text-danger"></small>
+                            </div>
+                            <input type="hidden" name="ExtendedWarranty1" id="extend" />
+                            <input type="hidden" name="Price" id="price" />
+                            <div class="col-md-12" style="padding:20px;">
+                                <input type="submit" value="Next" class="btn btn-primary float-right mt-10" />
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @*<img src="" />*@
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="~/Scripts/Moment.js"></script>
+    <script>
+        
+        function Loadlevel() {
+            var Name = document.getElementById("companyname").value;
+
+       $.ajax({
+           type: "GET",
+           url: "@Url.Action("getlevel", "Home")",
+           data: { Id: Name },
+           contentType: "application/json;charset=utf-8",
+           dataType: "json",
+           success: function (result) {
+               $('#level').val(result.obj);
+               //$('#warranty').val(result.obj);
+               Evaluation();
+                   },
+           error: function (response) {
+               alert('eror');
+           }
+       });
+
+        };
+        function Evaluation() {
+            var Name = $("#product").val();
+            var Level = $("#level").val();
+            var date = $("#date").val();
+            if (date != "") {
+                var temp = "";
+
+                var today = moment();
+                var nextMonth = today.subtract('month', 6);
+                if (new Date(date) >= new Date(nextMonth)) {
+                    temp = "yes";
+                }
+                else {
+                    $('#dateError').html("You are not eligible for the warranty extension.");
+                }
+            }
+            
+            if (Name != "" && Level != "" && temp=="yes")
+            {
+                if (Level == "Bronze-Platinum" && Name=="sonnen ecoLinx") {
+                    $('#price').val(50);
+                    $('#priceShow').html("Price: $150");
+                    $('#extend').val("5 years / 15,000 cycles");
+                    $('#ExtensionShow').html("Extend Warranty: 5 years / 15,000 cycles");
+                }
+                else if (Level == "Bronze-Platinum" && Name== "sonnen eco") {
+                    $('#price').val(50);
+                    $('#priceShow').html("Price: $50");
+                    $('#extend').val("2 years/2,000 cycles (total 12 years/12,000 cycles)");
+                    $('#ExtensionShow').html("Extend Warranty: 2 years/2,000 cycles (total 12 years/12,000 cycles)");
+                }
+                else if (Level == "Bronze-Diamond" && Name == "sonnen ecoLinx") {
+                    $('#price').val(50);
+                    $('#priceShow').html("Price: $100");
+                    $('#extend').val("5 years/5000 cycles (total of 15 years/15,000 cycles)");
+                    $('#ExtensionShow').html("Extend Warranty: 5 years/5000 cycles (total of 15 years/15,000 cycles)");
+                }
+                else if (Level == "Bronze-Diamond" && Name == "sonnen eco") {
+                    $('#price').val(50);
+                    $('#priceShow').html("Price: $200");
+                    $('#extend').val("5 years/5000 cycles (total of 20 years/20,000 cycles)");
+                    $('#ExtensionShow').html("Extend Warranty: 5 years/5000 cycles (total of 20 years/20,000 cycles)");
+                }
+                else if (Level == "Free" && Name == "sonnen ecoLinx") {
+                    $('#price').val(50);
+                    $('#priceShow').html("Price: $0");
+                    $('#extend').val("5 years/5000 cycles (total of 15 years/15,000 cycles)");
+                    $('#ExtensionShow').html("Extend Warranty: 5 years/5000 cycles (total of 15 years/15,000 cycles)");
+                }
+                else if (Level == "Free" && Name == "sonnen eco") {
+                    $('#price').val(50);
+                    $('#priceShow').html("Price: $0");
+                    $('#extend').val("5 years/5000 cycles (total of 20 years/20,000 cycles)");
+                    $('#ExtensionShow').html("Extend Warranty: 5 years/5000 cycles (total of 20 years/20,000 cycles)");
+                }
+            }
+        }
+         function ShowInfo() {
+             swal({
+                 title: 'Custom icon!',
+                 text: 'Alert with a custom image.',
+                 imageUrl: '../Content/images/sticker.jpg',
+                 imageWidth: 200,
+                 imageHeight: 100,
+                 imageAlt: 'Custom image',
+                 animation: false
+             })
+        };
+        function Check() {
+            if ($('#check1').is(':checked') == true) {
+                event.preventDefault();
+                $('#checkError1').html('');
+                return false;
+            }
+            if ($('#check2').is(':checked') == true) {
+                event.preventDefault();
+                $('#checkError2').html('');
+                return false;
+            }
+        }
+        function Check1() {
+
+            if ($('#check2').is(':checked') == true) {
+                event.preventDefault();
+                $('#checkError2').html('');
+                return false;
+            }
+        }
+        $('#form').submit(function (event) {
+            if ($('#check1').is(':checked') == false) {
+                event.preventDefault();
+                $('#checkError1').html('By signing up, you must accept our terms and conditions!');
+                return false;
+            }
+        });
+        $('#form').submit(function (event) {
+            if ($('#check2').is(':checked') == false) {
+                event.preventDefault();
+                $('#checkError2').html('By signing up, you must accept our terms and conditions!');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

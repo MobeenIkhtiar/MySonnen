@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SonnenDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ExtendedWarranty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Address1" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Address2" Type="varchar" MaxLength="255" />
+    <Property Name="City" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="State" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="ZipCode" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Phone" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="SerialNumber" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="ProductInstalled" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Capacity" Type="int" Nullable="false" />
+    <Property Name="InstallDate" Type="datetime" Nullable="false" />
+    <Property Name="InstallerId" Type="int" />
+    <Property Name="Price" Type="float" Nullable="false" />
+    <Property Name="ExtendedWarranty" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="RegisterDate" Type="datetime" Nullable="false" />
+    <Property Name="BrainTreePaymentId" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="Installer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Level" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="PartnerName" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="FreeWarranty" Type="int" />
+  </EntityType>
+  <Association Name="inst_fk">
+    <End Role="Installer" Type="Self.Installer" Multiplicity="0..1" />
+    <End Role="ExtendedWarranty" Type="Self.ExtendedWarranty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Installer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExtendedWarranty">
+        <PropertyRef Name="InstallerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SonnenDBModelStoreContainer">
+    <EntitySet Name="ExtendedWarranty" EntityType="Self.ExtendedWarranty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Installer" EntityType="Self.Installer" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="inst_fk" Association="Self.inst_fk">
+      <End Role="Installer" EntitySet="Installer" />
+      <End Role="ExtendedWarranty" EntitySet="ExtendedWarranty" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

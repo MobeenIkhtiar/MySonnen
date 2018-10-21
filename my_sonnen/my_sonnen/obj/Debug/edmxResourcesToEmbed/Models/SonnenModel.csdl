@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SonnenDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ExtendedWarranty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SerialNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ProductInstalled" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Capacity" Type="Int32" Nullable="false" />
+    <Property Name="InstallDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="InstallerId" Type="Int32" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="ExtendedWarranty1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RegisterDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="BrainTreePaymentId" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Installer" Relationship="Self.inst_fk" FromRole="ExtendedWarranty" ToRole="Installer" />
+  </EntityType>
+  <EntityType Name="Installer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Level" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PartnerName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FreeWarranty" Type="Int32" />
+    <NavigationProperty Name="ExtendedWarranties" Relationship="Self.inst_fk" FromRole="Installer" ToRole="ExtendedWarranty" />
+  </EntityType>
+  <Association Name="inst_fk">
+    <End Role="Installer" Type="Self.Installer" Multiplicity="0..1" />
+    <End Role="ExtendedWarranty" Type="Self.ExtendedWarranty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Installer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExtendedWarranty">
+        <PropertyRef Name="InstallerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SonnenDBEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ExtendedWarranties" EntityType="Self.ExtendedWarranty" />
+    <EntitySet Name="Installers" EntityType="Self.Installer" />
+    <AssociationSet Name="inst_fk" Association="Self.inst_fk">
+      <End Role="Installer" EntitySet="Installers" />
+      <End Role="ExtendedWarranty" EntitySet="ExtendedWarranties" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
